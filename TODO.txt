@@ -1,0 +1,18 @@
+1. Por classes e state machine inicial //OK
+    1.1 Fazer menu //OK
+    1.2 Fazer maingame //OK
+    1.3 Fazer fase 1 //OK
+2. Colocar o jogador 1 na tela
+    2.1 Fazer movimento do jogador 1
+    2.2 Fazer rastro do jogador 1
+    2.3 Fazer colisão do jogador 1
+3. Colocar o jogador 2 na tela
+    3.1 Fazer movimento do jogador 2
+    3.2 Fazer rastro do jogador 2
+    3.3 Fazer colisão do jogador 2
+4. Fazer colisão do jogador 1 com o jogador 2
+5. Por obstáculos na tela
+    5.1 Fazer colisão dos jogadores com os obstáculos
+6. Fazer tela de fim de jogo.
+7. Fazer pontuação máxima
+8. Por som e acertar assets
