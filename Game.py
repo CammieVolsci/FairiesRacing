@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, Actors
 from pygame.locals import *
 
 class StateMachine:
@@ -63,9 +63,16 @@ class MainGame(StateMachine):
     background = None
     game_over = False  
     pink = (231,84,128)
+    white = (255,255,255)
 
     jogador1 = None
     jogador2 = None
+
+    rastro1 = []
+    rastro2 = []
+
+    tamanho_rastro1 = 0
+    tamanho_rastro2 = 0
 
     def __init__(self,**game_images):
         StateMachine.__init__(self)
@@ -80,6 +87,7 @@ class MainGame(StateMachine):
 
     def handle_events(self,event):
         jogador1 = self.jogador1
+        jogador2 = self.jogador2
 
         if event.type == KEYDOWN:
             if self.game_over:
@@ -87,19 +95,35 @@ class MainGame(StateMachine):
                     self.next = 'menu'                   
                     self.end = True          
             else:      
-                if event.key == K_LEFT:
-                    jogador1.mover = -10
-                elif event.key == K_RIGHT:
-                    jogador1.mover = 10
-        elif event.type == KEYUP:
-            if event.key == K_LEFT or event.key == K_RIGHT:
-                jogador1.mover = 0
+                if event.key == K_a:
+                    jogador1.mover_x = -8
+                    jogador1.mover_y = 0
+                elif event.key == K_d:
+                    jogador1.mover_x = 8
+                    jogador1.mover_y = 0
+                elif event.key == K_w:
+                    jogador1.mover_y = -8
+                    jogador1.mover_x = 0
+                elif event.key == K_s:
+                    jogador1.mover_y = 8
+                    jogador1.mover_x = 0
 
     def actors_update(self):
-        pass
+        jogador1 = self.jogador1
+        rastro1 = self.rastro1
+
+        jogador1.movimento()
+        rastro1.append(Actors.Track(jogador1.x,jogador1.y,self.rastro1_image))
+        self.tamanho_rastro1 = self.tamanho_rastro1 + 1
 
     def actors_draw(self,displaysurf):
-        pass
+        jogador1 = self.jogador1
+        jogador2 = self.jogador2
+
+        jogador1.desenhar(displaysurf)
+
+        for i in range(self.tamanho_rastro1):
+            self.rastro1[i].desenhar(displaysurf)
 
     def update(self,displaysurf):  
         pass 
@@ -110,10 +134,10 @@ class FaseI(MainGame):
         super().__init__(**game_images)
     
     def startup(self):
-        pass
+        self.jogador1 = Actors.Fairy(20,300,self.jogador1_image)
 
     def update(self,displaysurf):
-        displaysurf.fill(self.pink)
+        displaysurf.fill(self.white)
         self.actors_update()
         self.actors_draw(displaysurf) 
 
@@ -177,10 +201,10 @@ def main():
     }
 
     game_images = {
-        'jogador1' : "assets/waterfairy",
-        'rastro1' : "assets/waterfairy1",
-        'jogador2' : "assets/leaffairy",
-        'rastro2' : "assets/leaffairy2",
+        'jogador1_image' : "assets/waterfairy.png",
+        'rastro1_image' : "assets/waterfairy1.png",
+        'jogador2_image' : "assets/leaffairy.png",
+        'rastro2_image' : "assets/leaffairy2.png",
     }
 
     dicionario_estados = {
