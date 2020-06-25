@@ -9,7 +9,7 @@ class BaseActor(pygame.sprite.Sprite):
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect() 
         self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.y = self.y       
 
     def desenhar(self,screen):
         screen.blit(self.image,(self.x,self.y))
@@ -30,21 +30,24 @@ class Fairy(BaseActor):
         self.x += self.mover_x
         self.y += self.mover_y
 
-        if self.x <= 5:
-            self.x = 5
+        self.rect.x = self.x
+        self.rect.y = self.y 
+
+        if self.x <= 0:
+            self.x = 0
             self.mover_x = 0
             self.dead = True
-        elif self.x +25 >= 795:
-            self.x = 770
+        elif self.x + 25 >= 800:
+            self.x = 775
             self.mover_x = 0
             self.dead = True
 
-        if self.y <= 5:
-            self.y = 5
+        if self.y <= 0:
+            self.y = 0
             self.mover_y = 0
             self.dead = True
-        elif self.y + 25 >= 645:
-            self.y = 620
+        elif self.y + 25 >= 650:
+            self.y = 625
             self.mover_y = 0
             self.dead = True
 

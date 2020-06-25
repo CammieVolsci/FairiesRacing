@@ -74,6 +74,8 @@ class MainGame(StateMachine):
     tamanho_rastro1 = 0
     tamanho_rastro2 = 0
 
+    jogador1_flag = False
+
     def __init__(self,**game_images):
         StateMachine.__init__(self)
         Textos.__init__(self)
@@ -96,25 +98,30 @@ class MainGame(StateMachine):
                     self.end = True          
             else:      
                 if event.key == K_a:
-                    jogador1.mover_x = -8
-                    jogador1.mover_y = 0
+                    jogador1.mover_x = -25
+                    jogador1.mover_y = 0                                     
                 elif event.key == K_d:
-                    jogador1.mover_x = 8
-                    jogador1.mover_y = 0
+                    jogador1.mover_x = 25
+                    jogador1.mover_y = 0   
+                    self.jogador1_flag = True   
                 elif event.key == K_w:
-                    jogador1.mover_y = -8
+                    jogador1.mover_y = -25
                     jogador1.mover_x = 0
+                    self.jogador1_flag = True
                 elif event.key == K_s:
-                    jogador1.mover_y = 8
+                    jogador1.mover_y = 25
                     jogador1.mover_x = 0
+                    self.jogador1_flag = True
 
     def actors_update(self):
         jogador1 = self.jogador1
         rastro1 = self.rastro1
 
-        jogador1.movimento()
-        rastro1.append(Actors.Track(jogador1.x,jogador1.y,self.rastro1_image))
-        self.tamanho_rastro1 = self.tamanho_rastro1 + 1
+        jogador1.movimento() 
+
+        if self.jogador1_flag:          
+            rastro1.append(Actors.Track(jogador1.x,jogador1.y,self.rastro1_image))
+            self.tamanho_rastro1 = self.tamanho_rastro1 + 1       
 
     def actors_draw(self,displaysurf):
         jogador1 = self.jogador1
@@ -125,6 +132,8 @@ class MainGame(StateMachine):
         for i in range(self.tamanho_rastro1):
             self.rastro1[i].desenhar(displaysurf)
 
+        print(self.tamanho_rastro1)
+
     def update(self,displaysurf):  
         pass 
 
@@ -134,7 +143,7 @@ class FaseI(MainGame):
         super().__init__(**game_images)
     
     def startup(self):
-        self.jogador1 = Actors.Fairy(20,300,self.jogador1_image)
+        self.jogador1 = Actors.Fairy(0,300,self.jogador1_image)
 
     def update(self,displaysurf):
         displaysurf.fill(self.white)
@@ -197,7 +206,7 @@ def main():
 
     settings = {
         'size' : (800,650),
-        'fps' : 30           
+        'fps' : 10           
     }
 
     game_images = {
