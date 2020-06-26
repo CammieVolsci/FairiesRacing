@@ -17,7 +17,7 @@ class BaseActor(pygame.sprite.Sprite):
     def teste_colisao(self,sprite):
         if(self.image!=0):
             return self.rect.colliderect(sprite.rect) 
-
+    
 class Fairy(BaseActor):
     
     def __init__(self,x,y,image):

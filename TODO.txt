@@ -4,13 +4,15 @@
     1.3 Fazer fase 1 //OK
 2. Colocar o jogador 1 na tela //OK
     2.1 Fazer movimento do jogador 1 //OK
-    2.2 Fazer rastro do jogador 1
-    2.3 Fazer colisão do jogador 1
-3. Colocar o jogador 2 na tela
-    3.1 Fazer movimento do jogador 2
-    3.2 Fazer rastro do jogador 2
-    3.3 Fazer colisão do jogador 2
-4. Fazer colisão do jogador 1 com o jogador 2
+    2.2 Fazer rastro do jogador 1 //OK
+    2.3 Fazer colisão do jogador 1 //OK
+3. Colocar o jogador 2 na tela //OK
+    3.1 Fazer movimento do jogador 2 //OK
+    3.2 Fazer rastro do jogador 2 //OK
+    3.3 Fazer colisão do jogador 2 //OK
+4. Fazer colisão do jogador 1 com o jogador 2 //OK
+    4.1 Impedir o jogador de 'entrar nele mesmo'
+    4.2 Corrigir que não aparece rastro quando bate nas paredes
 5. Por obstáculos na tela
     5.1 Fazer colisão dos jogadores com os obstáculos
 6. Fazer tela de fim de jogo.
