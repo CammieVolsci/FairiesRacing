@@ -1,4 +1,4 @@
-import pygame, sys, Actors
+import pygame, sys, random, datetime, Actors
 from pygame.locals import *
 
 class StateMachine:
@@ -33,6 +33,16 @@ class Textos:
         displaysurf.blit(enterSurf,enterRect)
         #displaysurf.blit(scoreSurf,scoreRect)
 
+    def gameover(self,displaysurf,jogador):
+        gameOverSurf = self.basic_font.render('Game Over + ' + jogador + ' Wins',True,self.black)
+        resetSurf = self.basic_font.render('Pressione ENTER para reiniciar',True,self.black)
+        gameOverRect = gameOverSurf.get_rect()
+        resetRect = resetSurf.get_rect()
+        gameOverRect.center = (405,250)
+        resetRect.center = (405,300)    
+        displaysurf.blit(gameOverSurf,gameOverRect)             
+        displaysurf.blit(resetSurf,resetRect)
+
 class MainMenu(StateMachine):
     
     pink = (231,84,128)
@@ -59,6 +69,8 @@ class MainMenu(StateMachine):
         t.menu_txt(displaysurf,'Faeries Racing') 
 
 class MainGame(StateMachine):
+
+    random.seed(datetime.time())  
     
     background = None
     game_over = False  
@@ -70,6 +82,7 @@ class MainGame(StateMachine):
 
     rastro1 = []
     rastro2 = []
+    rock = []
 
     tamanho_rastro1 = 0
     tamanho_rastro2 = 0
@@ -98,35 +111,43 @@ class MainGame(StateMachine):
                     self.next = 'menu'                   
                     self.end = True          
             else:      
-                if self.jogador1_flag and (event.key == K_a and not jogador1.dead):
+                if self.jogador1_flag and (event.key == K_a and (not jogador1.dead and not jogador1.direcao=='direita')):
                     jogador1.mover_x = -25
-                    jogador1.mover_y = 0                                     
-                elif event.key == K_d and not jogador1.dead:
+                    jogador1.mover_y = 0   
+                    jogador1.direcao = 'esquerda'                                  
+                elif event.key == K_d and (not jogador1.dead and not jogador1.direcao=='esquerda'):
                     jogador1.mover_x = 25
                     jogador1.mover_y = 0   
+                    jogador1.direcao = 'direita'
                     self.jogador1_flag = True   
-                elif event.key == K_w and not jogador1.dead:
+                elif event.key == K_w and (not jogador1.dead and not jogador1.direcao=='baixo'):
                     jogador1.mover_y = -25
                     jogador1.mover_x = 0
+                    jogador1.direcao = 'cima'
                     self.jogador1_flag = True
-                elif event.key == K_s and not jogador1.dead:
+                elif event.key == K_s and (not jogador1.dead and not jogador1.direcao=='cima'):
                     jogador1.mover_y = 25
                     jogador1.mover_x = 0
+                    jogador1.direcao = 'baixo'
                     self.jogador1_flag = True
-                elif event.key == K_LEFT and not jogador2.dead:
+                elif event.key == K_LEFT and (not jogador2.dead and not jogador2.direcao=='direita'):
                     jogador2.mover_x = -25
-                    jogador2.mover_y = 0    
+                    jogador2.mover_y = 0
+                    jogador2.direcao = 'esquerda'    
                     self.jogador2_flag = True
-                elif self.jogador2_flag and (event.key == K_RIGHT and not jogador2.dead):
+                elif self.jogador2_flag and (event.key == K_RIGHT and (not jogador2.dead and not jogador2.direcao=='esquerda')):
                     jogador2.mover_x = 25
                     jogador2.mover_y = 0 
-                elif event.key == K_UP and not jogador2.dead:
+                    jogador2.direcao = 'direita'
+                elif event.key == K_UP and (not jogador2.dead and not jogador2.direcao=='baixo'):
                     jogador2.mover_y = -25
                     jogador2.mover_x = 0
+                    jogador2.direcao = 'cima'
                     self.jogador2_flag = True
-                elif event.key == K_DOWN and not jogador2.dead:
+                elif event.key == K_DOWN and (not jogador2.dead and not jogador2.direcao=='cima'):
                     jogador2.mover_y = 25
                     jogador2.mover_x = 0
+                    jogador2.direcao = 'baixo'
                     self.jogador2_flag = True
 
     def actors_update(self):
@@ -140,9 +161,9 @@ class MainGame(StateMachine):
         x_jogador2 = jogador2.x
         y_jogador2 = jogador2.y  
 
-        jogador1.movimento() 
-        jogador2.movimento()
-
+        for i in range(10):
+            self.rock.append(Actors.Rock(random.randint(50,700),random.randint(50,600),self.rock_image)) 
+        
         if self.jogador1_flag and not jogador1.dead:          
             rastro1.append(Actors.Track(x_jogador1,y_jogador1,self.rastro1_image))
             self.tamanho_rastro1 = self.tamanho_rastro1 + 1   
@@ -150,6 +171,9 @@ class MainGame(StateMachine):
         if self.jogador2_flag and not jogador2.dead:          
             rastro2.append(Actors.Track(x_jogador2,y_jogador2,self.rastro2_image))
             self.tamanho_rastro2 = self.tamanho_rastro2 + 1  
+
+        jogador1.movimento() 
+        jogador2.movimento()
         
         if self.tamanho_rastro1 > 1:
             for i in range(self.tamanho_rastro1):
@@ -173,6 +197,16 @@ class MainGame(StateMachine):
                     jogador1.mover_y = 0
                     jogador1.dead = True
 
+        for i in range(10):
+            if jogador1.teste_colisao(self.rock[i]):  
+                jogador1.mover_x = 0
+                jogador1.mover_y = 0
+                jogador1.dead = True
+            if jogador2.teste_colisao(self.rock[i]):
+                jogador2.mover_x = 0
+                jogador2.mover_y = 0
+                jogador2.dead = True          
+
     def actors_draw(self,displaysurf):
         jogador1 = self.jogador1
         jogador2 = self.jogador2
@@ -185,6 +219,9 @@ class MainGame(StateMachine):
 
         for i in range(self.tamanho_rastro2):
             self.rastro2[i].desenhar(displaysurf)
+
+        for i in range(10):
+            self.rock[i].desenhar(displaysurf)
 
     def update(self,displaysurf):  
         pass 
@@ -199,9 +236,19 @@ class FaseI(MainGame):
         self.jogador2 = Actors.Fairy(750,300,self.jogador2_image)
 
     def update(self,displaysurf):
-        displaysurf.fill(self.white)
+        t = Textos()
+        displaysurf.fill(self.white)        
+
+        if self.jogador1.dead:
+            self.game_over = True
+            t.gameover(displaysurf,"Jogador 2")
+        elif self.jogador2.dead:
+            self.game_over = True
+            t.gameover(displaysurf,"Jogador 1")
+
         self.actors_update()
         self.actors_draw(displaysurf) 
+
 
 class FaeriesRacingGame:
 
@@ -267,6 +314,7 @@ def main():
         'rastro1_image' : "assets/waterfairy1.png",
         'jogador2_image' : "assets/leaffairy.png",
         'rastro2_image' : "assets/leaffairy1.png",
+        'rock_image' : "assets/rock.png"
     }
 
     dicionario_estados = {

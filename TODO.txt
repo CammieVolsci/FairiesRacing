@@ -11,10 +11,13 @@
     3.2 Fazer rastro do jogador 2 //OK
     3.3 Fazer colisão do jogador 2 //OK
 4. Fazer colisão do jogador 1 com o jogador 2 //OK
-    4.1 Impedir o jogador de 'entrar nele mesmo'
-    4.2 Corrigir que não aparece rastro quando bate nas paredes
-5. Por obstáculos na tela
-    5.1 Fazer colisão dos jogadores com os obstáculos
-6. Fazer tela de fim de jogo.
-7. Fazer pontuação máxima
-8. Por som e acertar assets
+    4.1 Impedir o jogador de 'entrar nele mesmo' //OK
+    4.2 Corrigir que não aparece rastro quando bate nas paredes //OK
+5. Por obstáculos na tela //OK
+    5.1 Fazer colisão dos jogadores com os obstáculos //OK
+6. Fazer tela de fim de jogo //OK
+7. Fazer os obstáculos gerarem entre quadrados de 25 em 25
+8. Fazer pontuação
+    8.1 Fazer tela de pontuação
+    8.2 Fazer pontuação máxima
+9. Por som e acertar assets

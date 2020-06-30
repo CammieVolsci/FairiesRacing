@@ -25,6 +25,7 @@ class Fairy(BaseActor):
         self.mover_x = 0   
         self.mover_y = 0
         self.dead = False
+        self.direcao = 'cima'
 
     def movimento(self):
         self.x += self.mover_x
@@ -56,6 +57,10 @@ class Fairy(BaseActor):
 
 class Track(BaseActor):
     
-     def __init__(self,x,y,image):
+    def __init__(self,x,y,image):
         super().__init__(x,y,image)
         
+class Rock(BaseActor):
+  
+    def __init__(self,x,y,image):
+        super().__init__(x,y,image)
