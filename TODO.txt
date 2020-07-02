@@ -16,7 +16,7 @@
 5. Por obstáculos na tela //OK
     5.1 Fazer colisão dos jogadores com os obstáculos //OK
 6. Fazer tela de fim de jogo //OK
-7. Fazer os obstáculos gerarem entre quadrados de 25 em 25
+7. Fazer os obstáculos gerarem entre quadrados de 25 em 25 //OK
 8. Fazer pontuação
     8.1 Fazer tela de pontuação
     8.2 Fazer pontuação máxima

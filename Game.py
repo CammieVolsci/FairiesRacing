@@ -162,7 +162,7 @@ class MainGame(StateMachine):
         y_jogador2 = jogador2.y  
 
         for i in range(10):
-            self.rock.append(Actors.Rock(random.randint(50,700),random.randint(50,600),self.rock_image)) 
+            self.rock.append(Actors.Rock(random.randint(50/25,700/25)*25,random.randint(50/25,600/25)*25,self.rock_image)) 
         
         if self.jogador1_flag and not jogador1.dead:          
             rastro1.append(Actors.Track(x_jogador1,y_jogador1,self.rastro1_image))
@@ -237,17 +237,17 @@ class FaseI(MainGame):
 
     def update(self,displaysurf):
         t = Textos()
-        displaysurf.fill(self.white)        
+        displaysurf.fill(self.white)  
+
+        self.actors_update()
+        self.actors_draw(displaysurf)       
 
         if self.jogador1.dead:
             self.game_over = True
             t.gameover(displaysurf,"Jogador 2")
         elif self.jogador2.dead:
             self.game_over = True
-            t.gameover(displaysurf,"Jogador 1")
-
-        self.actors_update()
-        self.actors_draw(displaysurf) 
+            t.gameover(displaysurf,"Jogador 1")      
 
 
 class FaeriesRacingGame:
