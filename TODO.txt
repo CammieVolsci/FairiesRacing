@@ -21,3 +21,7 @@
     8.1 Fazer tela de pontuação
     8.2 Fazer pontuação máxima
 9. Por som e acertar assets
+
+Bugs:
+    -Não reseta o jogo //OK
+    -O jogo deveria parar assim que um dos jogadores ganha (nao para) //OK

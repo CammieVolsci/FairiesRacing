@@ -99,7 +99,16 @@ class MainGame(StateMachine):
         pass
 
     def cleanup(self):
-        pass
+        self.rastro1.clear()
+        self.rastro2.clear()
+        self.rock.clear()
+        self.tamanho_rastro1 = 0
+        self.tamanho_rastro2 = 0
+        self.jogador1_flag = False
+        self.jogador2_flag = False
+        self.jogador1.dead = False
+        self.jogador2.dead = False
+        self.game_over = False
 
     def handle_events(self,event):
         jogador1 = self.jogador1
